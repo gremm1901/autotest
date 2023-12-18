@@ -17,20 +17,17 @@ class Сalculator
         double[] values = { oneValues, twoValues };
 
 
-        double res = Functions(nameFunction, values );
-        if (nameFunction != functionsText[0] && nameFunction != functionsText[1] && nameFunction != functionsText[2] && nameFunction != functionsText[3]) 
-        { 
-            Console.WriteLine("Все фигня давай поновой"); 
-        } else { 
-            Console.WriteLine($"{nameFunction} = {res}");
-            }
+        object res = Functions(nameFunction, values );
+        
+        Console.WriteLine($"{nameFunction} = {res}");
+            
         if (nameFunction != functionsText[4])
         {
             Main();
         }
         else { }
     }
-    public static double Functions(string nameFunction, double[] values)
+    public static object Functions(string nameFunction, double[] values)
     {
 
         switch (nameFunction)
@@ -39,7 +36,7 @@ class Сalculator
             case "вычитание": return Deduction(values);
             case "умнажение": return Multiplication(values);
             case "деление": return Division(values);
-            default: return 0;
+            default: return "Все фигня давай поновой";
         }
     }
     public static double Summa(double[] values)
@@ -55,8 +52,8 @@ class Сalculator
     public static double Deduction(double[] values)
     {
         int arrLengt = values.Length;
-        double summ = 0;
-        for (int i = 0; i < arrLengt; i++)
+        double summ = values[0];
+        for (int i = 1; i < arrLengt; i++)
         {
             summ -= values[i];
         }
@@ -72,13 +69,24 @@ class Сalculator
         }
         return summ;
     }
-    public static double Division(double[] values)
+    public static object Division(double[] values)
     {
         int arrLengt = values.Length;
-        double summ = 0;
-        for (int i = 0; i < arrLengt; i++)
+        double summ = values[0];
+        if (values[0] == 0)
         {
-            summ /= values[i];
+            summ = 0;
+        }
+        else if (values[1] == 0)
+        {
+            return "нельзя делить на ноль";
+        }
+        else
+        {
+            for (int i = 1; i < arrLengt; i++)
+            {
+                summ /= values[i];
+            }
         }
         return summ;
     }
