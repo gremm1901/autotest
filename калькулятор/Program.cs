@@ -1,31 +1,73 @@
 ﻿using System;
 class Сalculator
 {
+    static string[] functionsText = { "сумма", "вычитание", "умнажение", "деление", "факториал","степень" , "выход" };
 
     static void Main()
     {
-        string[] functionsText = { "сумма", "вычитание", "умнажение", "деление" , "выход"};
-        Console.WriteLine($"введите что хотите сделать : {functionsText[0]}, {functionsText[1]}, {functionsText[2]}, {functionsText[3]}");
+        Console.WriteLine($"введите что хотите сделать : ");
+
+        int arrLengt = functionsText.Length;
+        for (int i = 0; i < arrLengt; i++)
+        {
+            Console.WriteLine($"{functionsText[i]}");
+        }
+
         string? nameFunction = Console.ReadLine();
 
-        Console.Write("Введите первое число:");
-        double oneValues = Convert.ToDouble(Console.ReadLine());
-
-        Console.Write("Введите второе число:");
-        double twoValues = Convert.ToDouble(Console.ReadLine());
-
-        double[] values = { oneValues, twoValues };
-
-
-        object res = Functions(nameFunction, values );
-        
-        Console.WriteLine($"{nameFunction} = {res}");
-            
-        if (nameFunction != functionsText[4])
+        if (nameFunction == functionsText[^1])
         {
+            Exit();
+        }
+        else if (nameFunction == null | nameFunction == "")
+        {
+            Console.WriteLine("Если бы мы понимали что это такое, но мы не понимаем что это такое.Давай все поновой");
             Main();
         }
-        else { }
+        else
+        {
+            Input(nameFunction);
+            Main();
+        }
+    }
+
+    public static void Exit() { 
+        Console.Write("досвидание");
+    }
+    public static void Input (string nameFunction) 
+    {
+        if (nameFunction == functionsText[^3])
+        {
+            Console.Write("Введите число:");
+            double oneValues = Convert.ToDouble(Console.ReadLine());
+            double res = Factorial(oneValues);
+
+            Console.WriteLine($"{nameFunction} = {res}");
+        }
+        else if (nameFunction == functionsText[^2])
+        {
+            Console.Write("Введите число:");
+            double oneValues = Convert.ToDouble(Console.ReadLine());
+
+            Console.Write("Введите степень числа:");
+            double twoValues = Convert.ToDouble(Console.ReadLine());
+
+            double[] values = { oneValues, twoValues };
+            var res = Functions(nameFunction, values);
+            Console.WriteLine($"{nameFunction} = {res}");
+        }
+        else
+        {
+            Console.Write("Введите первое число:");
+            double oneValues = Convert.ToDouble(Console.ReadLine());
+
+            Console.Write("Введите второе число:");
+            double twoValues = Convert.ToDouble(Console.ReadLine());
+
+            double[] values = { oneValues, twoValues };
+            var res = Functions(nameFunction, values);
+            Console.WriteLine($"{nameFunction} = {res}");
+        }
     }
     public static object Functions(string nameFunction, double[] values)
     {
@@ -36,6 +78,7 @@ class Сalculator
             case "вычитание": return Deduction(values);
             case "умнажение": return Multiplication(values);
             case "деление": return Division(values);
+            case "степень": return Degree(values);
             default: return "Все фигня давай поновой";
         }
     }
@@ -46,6 +89,21 @@ class Сalculator
         for (int i = 0; i < arrLengt; i++)
         {
             summ += values[i];
+        }
+        return summ;
+    }
+    public static double Factorial(double oneValues)
+    {
+        if (oneValues == 1) return 1;
+        return oneValues * Factorial(oneValues-1);
+    }
+    public static double Degree(double[] oneValues)
+    {
+        double summ = 1;
+        if (oneValues[1] == 0) return 1;
+        for (int i = 0; i < oneValues[1]; i++)
+        {
+            summ = summ* oneValues[0];
         }
         return summ;
     }
